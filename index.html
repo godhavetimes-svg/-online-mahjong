@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>ONLINE MAHJONG</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    min-height:100%;
+    background:#0d0d0d;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.app{
+    width:100%;
+    max-width:620px;
+    min-height:100vh;
+    margin:auto;
+    padding:20px;
+}
+
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:3px;
+    margin-top:25px;
+}
+
+.sub{
+    text-align:center;
+    color:#999;
+    font-size:13px;
+    margin:8px 0 28px;
+}
+
+.card{
+    background:#191919;
+    border:1px solid #333;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    color:#aaa;
+    font-size:13px;
+    margin:12px 0 7px;
+}
+
+input,
+select{
+    width:100%;
+    background:#242424;
+    color:#fff;
+    border:1px solid #444;
+    border-radius:11px;
+    padding:14px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#e91e63;
+}
+
+.main-btn{
+    width:100%;
+    margin-top:15px;
+    padding:15px;
+    border-radius:11px;
+    background:#e91e63;
+    color:#fff;
+    font-weight:800;
+}
+
+.dark-btn{
+    width:100%;
+    margin-top:10px;
+    padding:14px;
+    border-radius:11px;
+    background:#303030;
+    color:#fff;
+    font-weight:700;
+}
+
+.message{
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:12px;
+    font-size:14px;
+}
+
+.error{
+    background:#351616;
+    border:1px solid #7e3030;
+    color:#ff9b9b;
+}
+
+.ok{
+    background:#15351f;
+    border:1px solid #2e7040;
+    color:#83e6a0;
+}
+
+.room-title{
+    text-align:center;
+    color:#999;
+    font-size:13px;
+}
+
+.room-id{
+    text-align:center;
+    font-size:38px;
+    font-weight:900;
+    letter-spacing:8px;
+    color:#ff4081;
+    padding:12px 0;
+}
+
+.bet{
+    text-align:center;
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:15px;
+}
+
+.players{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.player{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#252525;
+    border-radius:12px;
+    padding:13px;
+}
+
+.player-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#3b3b3b;
+    font-weight:900;
+}
+
+.player-name{
+    font-weight:700;
+}
+
+.player-points{
+    color:#aaa;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.ready{
+    color:#69f0ae;
+    font-size:13px;
+    font-weight:700;
+}
+
+.waiting{
+    color:#888;
+    font-size:13px;
+}
+
+.room-status{
+    text-align:center;
+    color:#aaa;
+    font-size:13px;
+    line-height:1.7;
+}
+
+
+/* ================================
+   GAME TABLE
+================================ */
+
+.game-app{
+    max-width:950px;
+}
+
+.game-table{
+    position:relative;
+    width:100%;
+    max-width:900px;
+    aspect-ratio:1 / 1;
+    margin:auto;
+    overflow:hidden;
+
+    background:
+        radial-gradient(circle at center,
+        #198553 0%,
+        #126a43 55%,
+        #0d5435 100%);
+
+    border:12px solid #3b2417;
+    border-radius:25px;
+    box-shadow:
+        0 0 0 3px #69452c,
+        0 15px 40px #000;
+}
+
+.center{
+    position:absolute;
+    width:180px;
+    height:125px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+    background:#0d5335;
+    border:2px solid rgba(255,255,255,.15);
+}
+
+.round{
+    font-size:26px;
+    font-weight:900;
+}
+
+.small{
+    color:#a8d9c0;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.seat{
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.seat-name{
+    background:rgba(0,0,0,.5);
+    border-radius:7px;
+    padding:5px 9px;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.seat-points{
+    margin-top:3px;
+    font-size:12px;
+}
+
+.top{
+    left:50%;
+    top:10px;
+    transform:translateX(-50%);
+}
+
+.right{
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.bottom{
+    left:50%;
+    bottom:8px;
+    transform:translateX(-50%);
+}
+
+.left{
+    left:8px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.fake-hand{
+    display:flex;
+    gap:3px;
+    margin-top:7px;
+}
+
+.back-tile{
+    width:25px;
+    height:35px;
+    border-radius:4px;
+    background:#eee;
+    box-shadow:0 2px 2px #0005;
+}
+
+.my-hand{
+    position:absolute;
+    left:5px;
+    right:5px;
+    bottom:54px;
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:3px;
+}
+
+.tile{
+    width:38px;
+    height:54px;
+
+    background:#f7f7f7;
+    color:#111;
+
+    border-radius:5px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:28px;
+
+    box-shadow:
+        0 3px 4px rgba(0,0,0,.4);
+}
+
+.controls{
+    position:absolute;
+    bottom:7px;
+    left:50%;
+    transform:translateX(-50%);
+
+    display:flex;
+    gap:5px;
+    white-space:nowrap;
+}
+
+.controls button{
+    background:#202020;
+    color:#fff;
+    padding:8px 10px;
+    border-radius:7px;
+    font-size:11px;
+}
+
+@media(max-width:600px){
+
+    .app{
+        padding:15px;
+    }
+
+    .logo{
+        font-size:25px;
+    }
+
+    .game-table{
+        border-width:8px;
+    }
+
+    .center{
+        width:125px;
+        height:90px;
+    }
+
+    .round{
+        font-size:19px;
+    }
+
+    .tile{
+        width:27px;
+        height:42px;
+        font-size:22px;
+    }
+
+    .back-tile{
+        width:20px;
+        height:29px;
+    }
+
+    .my-hand{
+        bottom:48px;
+    }
+
+    .controls button{
+        padding:6px 7px;
+        font-size:9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ================================
+     LOBBY
+================================ -->
+
+<div id="lobby" class="app">
+
+    <div class="logo">
+        🀄 ONLINE MAHJONG
+    </div>
+
+    <div class="sub">
+        4 PLAYER ONLINE
+    </div>
+
+    <div id="message"></div>
+
+
+    <div class="card">
+
+        <label>
+            プレイヤー名
+        </label>
+
+        <input
+            id="playerName"
+            maxlength="12"
+            placeholder="名前を入力"
+        >
+
+
+        <label>
+            ベット額
+        </label>
+
+        <select id="betAmount">
+
+            <option value="100">
+                100 pt
+            </option>
+
+            <option value="500">
+                500 pt
+            </option>
+
+            <option value="1000">
+                1,000 pt
+            </option>
+
+            <option value="5000">
+                5,000 pt
+            </option>
+
+        </select>
+
+
+        <button
+            class="main-btn"
+            onclick="createRoom()"
+        >
+            ルームを作成
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <label>
+            ルームID
+        </label>
+
+        <input
+            id="joinRoomId"
+            maxlength="6"
+            inputmode="numeric"
+            placeholder="6桁のルームID"
+        >
+
+        <button
+            class="dark-btn"
+            onclick="joinRoom()"
+        >
+            ルームに参加
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================
+     ROOM
+================================ -->
+
+<div id="room" class="app hidden">
+
+    <div class="logo">
+        🀄 ROOM
+    </div>
+
+    <div class="sub">
+        ONLINE TABLE
+    </div>
+
+
+    <div class="card">
+
+        <div class="room-title">
+            ルームID
+        </div>
+
+        <div
+            id="roomId"
+            class="room-id"
+        >
+            ------
+        </div>
+
+        <button
+            class="dark-btn"
+            onclick="copyRoomId()"
+        >
+            ルームIDをコピー
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="bet">
+            BET
+            <span id="bet">
+                0
+            </span>
+            pt
+        </div>
+
+        <div
+            id="players"
+            class="players"
+        ></div>
+
+        <button
+            id="readyBtn"
+            class="main-btn"
+            onclick="toggleReady()"
+        >
+            準備OK
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div
+            id="roomStatus"
+            class="room-status"
+        >
+            プレイヤーを待っています
+        </div>
+
+        <button
+            class="dark-btn"
+            onclick="leaveRoom()"
+        >
+            退出
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================
+     GAME
+================================ -->
+
+<div
+    id="game"
+    class="app game-app hidden"
+>
+
+    <div class="logo">
+        🀄 MAHJONG
+    </div>
+
+    <div class="sub">
+        ONLINE MATCH
+    </div>
+
+
+    <div class="game-table">
+
+
+        <div class="center">
+
+            <div class="round">
+                東1局
+            </div>
+
+            <div class="small">
+                0本場
+            </div>
+
+            <div class="small">
+                残り70枚
+            </div>
+
+        </div>
+
+
+        <!-- TOP -->
+
+        <div class="seat top">
+
+            <div
+                id="topName"
+                class="seat-name"
+            >
+                対面
+            </div>
+
+            <div
+                id="topPoints"
+                class="seat-points"
+            >
+                10000 pt
+            </div>
+
+            <div class="fake-hand">
+
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="seat right">
+
+            <div
+                id="rightName"
+                class="seat-name"
+            >
+                上家
+            </div>
+
+            <div
+                id="rightPoints"
+                class="seat-points"
+            >
+                10000 pt
+            </div>
+
+            <div class="fake-hand">
+
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LEFT -->
+
+        <div class="seat left">
+
+            <div
+                id="leftName"
+                class="seat-name"
+            >
+                下家
+            </div>
+
+            <div
+                id="leftPoints"
+                class="seat-points"
+            >
+                10000 pt
+            </div>
+
+            <div class="fake-hand">
+
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+                <div class="back-tile"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTTOM -->
+
+        <div class="seat bottom">
+
+            <div
+                id="myName"
+                class="seat-name"
+            >
+                あなた
+            </div>
+
+            <div
+                id="myPoints"
+                class="seat-points"
+            >
+                10000 pt
+            </div>
+
+        </div>
+
+
+        <!-- MY HAND -->
+
+        <div
+            id="myHand"
+            class="my-hand"
+        >
+
+            <div class="tile">🀇</div>
+            <div class="tile">🀈</div>
+            <div class="tile">🀉</div>
+            <div class="tile">🀊</div>
+            <div class="tile">🀋</div>
+            <div class="tile">🀌</div>
+            <div class="tile">🀍</div>
+            <div class="tile">🀎</div>
+            <div class="tile">🀏</div>
+            <div class="tile">🀐</div>
+            <div class="tile">🀑</div>
+            <div class="tile">🀒</div>
+            <div class="tile">🀓</div>
+
+        </div>
+
+
+        <!-- CONTROLS -->
+
+        <div class="controls">
+
+            <button>
+                チー
+            </button>
+
+            <button>
+                ポン
+            </button>
+
+            <button>
+                カン
+            </button>
+
+            <button>
+                リーチ
+            </button>
+
+            <button>
+                ロン
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script type="module">
+
+/* =========================================
+   FIREBASE
+========================================= */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    set,
+    get,
+    update,
+    remove,
+    onValue
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyAwCitt9BKUnsDP57iNqX7BGlfJo_i2_kI",
+
+    authDomain:
+        "online--merger.firebaseapp.com",
+
+    databaseURL:
+        "https://online--merger-default-rtdb.firebaseio.com/",
+
+    projectId:
+        "online--merger",
+
+    storageBucket:
+        "online--merger.firebasestorage.app",
+
+    messagingSenderId:
+        "898248807664",
+
+    appId:
+        "1:898248807664:web:f4f0b6c928e889f9ad1e35",
+
+    measurementId:
+        "G-QNX20Z8K3C"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getDatabase(app);
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let myId = "";
+
+let myRoom = "";
+
+let roomUnsubscribe = null;
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function message(text,type="error"){
+
+    const box =
+        document.getElementById("message");
+
+    box.innerHTML = "";
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "message " + type;
+
+    div.textContent =
+        text;
+
+    box.appendChild(div);
+
+}
+
+
+/* =========================================
+   RANDOM ROOM ID
+========================================= */
+
+function createRoomId(){
+
+    return Math.floor(
+        100000 +
+        Math.random()*900000
+    ).toString();
+
+}
+
+
+/* =========================================
+   PLAYER ID
+========================================= */
+
+function createPlayerId(){
+
+    return (
+        "player_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .substring(2,9)
+    );
+
+}
+
+
+/* =========================================
+   CREATE ROOM
+========================================= */
+
+window.createRoom =
+async function(){
+
+    const name =
+        document
+        .getElementById("playerName")
+        .value
+        .trim();
+
+
+    const bet =
+        Number(
+            document
+            .getElementById("betAmount")
+            .value
+        );
+
+
+    if(!name){
+
+        message(
+            "プレイヤー名を入力してください"
+        );
+
+        return;
+    }
+
+
+    myId =
+        createPlayerId();
+
+
+    let roomId = null;
+
+
+    for(let i=0;i<20;i++){
+
+        const candidate =
+            createRoomId();
+
+
+        const snapshot =
+            await get(
+                ref(
+                    db,
+                    "rooms/" + candidate
+                )
+            );
+
+
+        if(!snapshot.exists()){
+
+            roomId =
+                candidate;
+
+            break;
+
+        }
+
+    }
+
+
+    if(!roomId){
+
+        message(
+            "ルーム作成に失敗しました"
+        );
+
+        return;
+
+    }
+
+
+    myRoom =
+        roomId;
+
+
+    await set(
+        ref(
+            db,
+            "rooms/" + roomId
+        ),
+        {
+
+            status:
+                "waiting",
+
+            bet:
+                bet,
+
+            host:
+                myId,
+
+            players:{
+
+                [myId]:{
+
+                    name:
+                        name,
+
+                    points:
+                        10000,
+
+                    ready:
+                        false,
+
+                    host:
+                        true
+
+                }
+
+            }
+
+        }
+    );
+
+
+    enterRoom();
+
+};
+
+
+/* =========================================
+   JOIN ROOM
+========================================= */
+
+window.joinRoom =
+async function(){
+
+    const name =
+        document
+        .getElementById("playerName")
+        .value
+        .trim();
+
+
+    const roomId =
+        document
+        .getElementById("joinRoomId")
+        .value
+        .trim();
+
+
+    if(!name){
+
+        message(
+            "プレイヤー名を入力してください"
+        );
+
+        return;
+
+    }
+
+
+    if(!/^\d{6}$/.test(roomId)){
+
+        message(
+            "6桁のルームIDを入力してください"
+        );
+
+        return;
+
+    }
+
+
+    const roomRef =
+        ref(
+            db,
+            "rooms/" + roomId
+        );
+
+
+    const snapshot =
+        await get(roomRef);
+
+
+    if(!snapshot.exists()){
+
+        message(
+            "そのルームは存在しません"
+        );
+
+        return;
+
+    }
+
+
+    const room =
+        snapshot.val();
+
+
+    if(room.status !== "waiting"){
+
+        message(
+            "この対局はすでに開始されています"
+        );
+
+        return;
+
+    }
+
+
+    const players =
+        room.players || {};
+
+
+    if(
+        Object.keys(players).length >= 4
+    ){
+
+        message(
+            "このルームは満員です"
+        );
+
+        return;
+
+    }
+
+
+    myId =
+        createPlayerId();
+
+    myRoom =
+        roomId;
+
+
+    await update(
+        ref(
+            db,
+            "rooms/" +
+            roomId +
+            "/players/" +
+            myId
+        ),
+        {
+
+            name:
+                name,
+
+            points:
+                10000,
+
+            ready:
+                false,
+
+            host:
+                false
+
+        }
+    );
+
+
+    enterRoom();
+
+};
+
+
+/* =========================================
+   ENTER ROOM
+========================================= */
+
+function enterRoom(){
+
+    document
+        .getElementById("lobby")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("room")
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById("roomId")
+        .textContent =
+            myRoom;
+
+
+    listenRoom();
+
+}
+
+
+/* =========================================
+   LISTEN ROOM
+========================================= */
+
+function listenRoom(){
+
+    if(roomUnsubscribe){
+
+        roomUnsubscribe();
+
+    }
+
+
+    const roomRef =
+        ref(
+            db,
+            "rooms/" + myRoom
+        );
+
+
+    roomUnsubscribe =
+        onValue(
+            roomRef,
+            snapshot => {
+
+                if(!snapshot.exists()){
+
+                    alert(
+                        "ルームが削除されました"
+                    );
+
+                    location.reload();
+
+                    return;
+
+                }
+
+
+                const room =
+                    snapshot.val();
+
+
+                renderPlayers(room);
+
+
+                if(
+                    room.status === "playing"
+                ){
+
+                    showGame(room);
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   RENDER PLAYERS
+========================================= */
+
+function renderPlayers(room){
+
+    const players =
+        room.players || {};
+
+
+    const ids =
+        Object.keys(players);
+
+
+    const list =
+        document
+        .getElementById("players");
+
+
+    list.innerHTML = "";
+
+
+    ids.forEach(
+        (id,index)=>{
+
+            const p =
+                players[id];
+
+
+            const div =
+                document
+                .createElement("div");
+
+
+            div.className =
+                "player";
+
+
+            div.innerHTML = `
+
+                <div class="player-left">
+
+                    <div class="avatar">
+                        ${index+1}
+                    </div>
+
+                    <div>
+
+                        <div class="player-name">
+                            ${escapeHtml(p.name)}
+                            ${p.host ? " 👑" : ""}
+                        </div>
+
+                        <div class="player-points">
+                            ${Number(p.points).toLocaleString()} pt
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="${
+                    p.ready
+                    ? "ready"
+                    : "waiting"
+                }">
+
+                    ${
+                        p.ready
+                        ? "準備OK"
+                        : "待機中"
+                    }
+
+                </div>
+
+            `;
+
+
+            list.appendChild(div);
+
+        }
+    );
+
+
+    document
+        .getElementById("bet")
+        .textContent =
+            Number(room.bet)
+            .toLocaleString();
+
+
+    const me =
+        players[myId];
+
+
+    if(me){
+
+        document
+            .getElementById("readyBtn")
+            .textContent =
+                me.ready
+                ? "準備を解除"
+                : "準備OK";
+
+    }
+
+
+    const count =
+        ids.length;
+
+
+    const readyCount =
+        ids.filter(
+            id =>
+                players[id].ready
+        ).length;
+
+
+    document
+        .getElementById("roomStatus")
+        .textContent =
+            `${count}/4人参加　｜　準備 ${readyCount}/${count}`;
+
+
+    /*
+       4人揃って全員READYなら
+       ホストがゲーム開始
+    */
+
+    if(
+
+        count === 4 &&
+
+        readyCount === 4 &&
+
+        room.host === myId &&
+
+        room.status === "waiting"
+
+    ){
+
+        startGame();
+
+    }
+
+}
+
+
+/* =========================================
+   READY
+========================================= */
+
+window.toggleReady =
+async function(){
+
+    if(!myRoom || !myId)
+        return;
+
+
+    const playerRef =
+        ref(
+            db,
+            "rooms/" +
+            myRoom +
+            "/players/" +
+            myId
+        );
+
+
+    const snapshot =
+        await get(playerRef);
+
+
+    if(!snapshot.exists())
+        return;
+
+
+    const player =
+        snapshot.val();
+
+
+    await update(
+        playerRef,
+        {
+
+            ready:
+                !player.ready
+
+        }
+    );
+
+};
+
+
+/* =========================================
+   START GAME
+========================================= */
+
+async function startGame(){
+
+    await update(
+        ref(
+            db,
+            "rooms/" + myRoom
+        ),
+        {
+
+            status:
+                "playing",
+
+            game:{
+
+                round:
+                    "東1局",
+
+                honba:
+                    0,
+
+                remaining:
+                    70
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   SHOW GAME
+========================================= */
+
+function showGame(room){
+
+    document
+        .getElementById("room")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("game")
+        .classList
+        .remove("hidden");
+
+
+    const players =
+        room.players || {};
+
+
+    const ids =
+        Object.keys(players);
+
+
+    const me =
+        players[myId];
+
+
+    if(me){
+
+        document
+            .getElementById("myName")
+            .textContent =
+                me.name;
+
+
+        document
+            .getElementById("myPoints")
+            .textContent =
+                Number(me.points)
+                .toLocaleString() +
+                " pt";
+
+    }
+
+
+    const others =
+        ids.filter(
+            id => id !== myId
+        );
+
+
+    if(others[0]){
+
+        document
+            .getElementById("topName")
+            .textContent =
+                players[others[0]].name;
+
+
+        document
+            .getElementById("topPoints")
+            .textContent =
+                Number(
+                    players[others[0]].points
+                ).toLocaleString() +
+                " pt";
+
+    }
+
+
+    if(others[1]){
+
+        document
+            .getElementById("rightName")
+            .textContent =
+                players[others[1]].name;
+
+
+        document
+            .getElementById("rightPoints")
+            .textContent =
+                Number(
+                    players[others[1]].points
+                ).toLocaleString() +
+                " pt";
+
+    }
+
+
+    if(others[2]){
+
+        document
+            .getElementById("leftName")
+            .textContent =
+                players[others[2]].name;
+
+
+        document
+            .getElementById("leftPoints")
+            .textContent =
+                Number(
+                    players[others[2]].points
+                ).toLocaleString() +
+                " pt";
+
+    }
+
+}
+
+
+/* =========================================
+   COPY ROOM ID
+========================================= */
+
+window.copyRoomId =
+function(){
+
+    if(
+        navigator.clipboard
+    ){
+
+        navigator.clipboard
+            .writeText(myRoom)
+            .then(
+                ()=>{
+                    alert(
+                        "ルームIDをコピーしました"
+                    );
+                }
+            );
+
+    }else{
+
+        alert(
+            "ルームID：" +
+            myRoom
+        );
+
+    }
+
+};
+
+
+/* =========================================
+   LEAVE
+========================================= */
+
+window.leaveRoom =
+async function(){
+
+    if(!myRoom || !myId){
+
+        location.reload();
+
+        return;
+
+    }
+
+
+    try{
+
+        await remove(
+            ref(
+                db,
+                "rooms/" +
+                myRoom +
+                "/players/" +
+                myId
+            )
+        );
+
+    }catch(e){
+
+        console.error(e);
+
+    }
+
+
+    location.reload();
+
+};
+
+
+/* =========================================
+   ESCAPE
+========================================= */
+
+function escapeHtml(text){
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+</body>
+</html>
