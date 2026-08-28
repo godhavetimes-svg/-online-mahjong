@@ -6,123 +6,361 @@
 <title>ONLINE SANMA</title>
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{
-  margin:0;background:#111;color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
-button,input,select{font:inherit}
-button{border:0;cursor:pointer}
-.hidden{display:none!important}
 
-.app{max-width:900px;margin:auto;padding:18px;min-height:100vh}
-.logo{text-align:center;font-size:28px;font-weight:900;margin:10px 0}
-.sub{text-align:center;color:#aaa;margin-bottom:20px;font-size:13px}
-.card{
-  background:#1b1b1b;border:1px solid #333;border-radius:16px;
-  padding:16px;margin-bottom:14px
+body{
+  margin:0;
+  min-height:100vh;
+  background:#101010;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-label{display:block;color:#aaa;font-size:13px;margin:10px 0 6px}
-input,select{
-  width:100%;padding:13px;background:#292929;color:#fff;
-  border:1px solid #444;border-radius:10px
+
+button,input,select{
+  font:inherit;
 }
+
 button{
-  padding:12px 16px;border-radius:10px;color:#fff;
-  background:#333;font-weight:800
+  border:0;
+  color:#fff;
+  cursor:pointer;
 }
-.main-btn{width:100%;margin-top:12px;background:#e91e63}
-.dark-btn{width:100%;margin-top:10px}
+
+.hidden{
+  display:none !important;
+}
+
+.app{
+  max-width:900px;
+  margin:auto;
+  padding:12px;
+  min-height:100vh;
+}
+
+.logo{
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+  margin:10px 0 4px;
+}
+
+.sub{
+  text-align:center;
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:18px;
+}
+
+.card{
+  background:#1b1b1b;
+  border:1px solid #353535;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:14px;
+}
+
+label{
+  display:block;
+  margin:10px 0 6px;
+  font-size:13px;
+  color:#aaa;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  background:#292929;
+  color:#fff;
+  border:1px solid #444;
+  border-radius:10px;
+}
+
+button{
+  padding:12px 16px;
+  border-radius:10px;
+  background:#333;
+  font-weight:800;
+}
+
+.main-btn{
+  width:100%;
+  margin-top:12px;
+  background:#e91e63;
+}
+
+.dark-btn{
+  width:100%;
+  margin-top:10px;
+}
+
+button:disabled{
+  opacity:.35;
+}
+
 .error{
-  background:#411818;color:#ffabab;padding:12px;
-  border-radius:10px;margin-bottom:12px
+  background:#421818;
+  color:#ffaaaa;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:12px;
 }
 
 .room-id{
-  text-align:center;font-size:34px;letter-spacing:7px;
-  color:#ff4081;font-weight:900
+  text-align:center;
+  font-size:32px;
+  letter-spacing:6px;
+  font-weight:900;
+  color:#ff4081;
 }
-.status{text-align:center;color:#bbb;margin:10px 0}
+
+.status{
+  text-align:center;
+  color:#bbb;
+  margin:10px 0;
+}
+
 .player{
-  display:flex;justify-content:space-between;align-items:center;
-  background:#272727;border-radius:10px;padding:12px;margin:7px 0
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#282828;
+  padding:12px;
+  border-radius:10px;
+  margin:7px 0;
 }
-.ready{color:#6dff9d}
-.waiting{color:#999}
+
+.ready{
+  color:#69ff99;
+}
+
+.waiting{
+  color:#999;
+}
 
 .table{
-  position:relative;width:100%;aspect-ratio:1/1;
-  max-height:800px;background:#087244;
-  border:10px solid #55351f;border-radius:24px;
-  overflow:hidden;box-shadow:0 8px 30px #000
+  position:relative;
+  width:100%;
+  aspect-ratio:1/1;
+  background:#087044;
+  border:9px solid #5a3921;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 8px 30px #000;
 }
+
 .center{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  background:#075a37;border:2px solid #43a77a;border-radius:15px;
-  width:170px;padding:12px;text-align:center
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:155px;
+  background:#075836;
+  border:2px solid #43a77a;
+  border-radius:14px;
+  padding:11px;
+  text-align:center;
+  z-index:3;
 }
-.turn{font-size:17px;font-weight:900;color:#ffe066}
-.remaining{color:#b8e6d1;font-size:12px;margin-top:7px}
+
+.turn{
+  color:#ffe066;
+  font-size:15px;
+  font-weight:900;
+  margin-top:6px;
+}
+
+.remaining{
+  color:#b9e6d2;
+  font-size:12px;
+  margin-top:6px;
+}
 
 .seat{
-  position:absolute;text-align:center;
-  background:rgba(0,0,0,.45);padding:6px 9px;border-radius:9px;
-  min-width:90px
+  position:absolute;
+  background:rgba(0,0,0,.45);
+  border-radius:9px;
+  padding:6px 9px;
+  min-width:85px;
+  text-align:center;
+  z-index:4;
 }
-.top{top:12px;left:50%;transform:translateX(-50%)}
-.right{right:8px;top:50%;transform:translateY(-50%)}
-.bottom{bottom:8px;left:50%;transform:translateX(-50%)}
-.seatName{font-weight:900;font-size:13px}
-.points{font-size:12px;color:#ddd;margin-top:3px}
+
+.top{
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.right{
+  right:7px;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.bottom{
+  bottom:7px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.seatName{
+  font-size:13px;
+  font-weight:900;
+}
+
+.points{
+  color:#ddd;
+  font-size:11px;
+  margin-top:3px;
+}
 
 .discards{
-  position:absolute;left:17%;right:17%;top:31%;bottom:27%;
-  display:flex;flex-wrap:wrap;align-content:flex-start;
-  gap:4px;overflow:hidden
+  position:absolute;
+  left:16%;
+  right:16%;
+  top:30%;
+  bottom:31%;
+  display:flex;
+  flex-wrap:wrap;
+  align-content:flex-start;
+  gap:4px;
+  overflow:hidden;
 }
+
 .discard{
-  width:28px;height:38px;background:#f7f7f7;color:#111;
-  border-radius:4px;display:flex;align-items:center;justify-content:center;
-  font-size:22px
+  width:27px;
+  height:37px;
+  background:#f5f5f5;
+  color:#111;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
 }
 
 .hand{
-  position:absolute;bottom:58px;left:5px;right:5px;
-  display:flex;justify-content:center;gap:2px;align-items:flex-end
+  position:absolute;
+  bottom:62px;
+  left:4px;
+  right:4px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap:2px;
+  z-index:5;
 }
+
 .tile{
-  width:34px;height:50px;background:#f5f5f5;color:#111;
-  border-radius:5px;display:flex;align-items:center;justify-content:center;
-  font-size:25px;box-shadow:0 2px 3px #0006;
-  user-select:none
+  width:34px;
+  height:50px;
+  flex:0 0 auto;
+  background:#f5f5f5;
+  color:#111;
+  border-radius:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  box-shadow:0 2px 4px #0008;
+  user-select:none;
+  transition:.1s;
 }
-.tile.playable{cursor:pointer}
+
+.tile.playable{
+  cursor:pointer;
+  outline:2px solid rgba(255,235,59,.7);
+}
+
 .tile.playable:active{
-  transform:translateY(-12px);
-  box-shadow:0 0 10px #ffeb3b
+  transform:translateY(-13px);
 }
 
 .actions{
-  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-  display:flex;gap:5px
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:6px;
+  z-index:6;
 }
-.actions button{font-size:11px;padding:8px 9px}
-.actions button.active{background:#e91e63}
+
+.actions button{
+  padding:8px 12px;
+  font-size:12px;
+}
+
+.draw{
+  background:#e91e63;
+}
+
 .result{
-  text-align:center;padding:25px;background:#1d1d1d;
-  border-radius:16px;margin-top:15px
+  margin-top:14px;
+  background:#1b1b1b;
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
 }
-.result h2{margin-top:0;color:#ff4081}
-.rank{padding:11px;background:#292929;border-radius:9px;margin:7px 0}
-.positive{color:#6dff9d}.negative{color:#ff7070}
+
+.result h2{
+  margin-top:0;
+  color:#ff4081;
+}
+
+.rank{
+  background:#292929;
+  padding:12px;
+  border-radius:10px;
+  margin:7px 0;
+}
+
+.positive{
+  color:#69ff99;
+}
+
+.negative{
+  color:#ff7777;
+}
 
 @media(max-width:600px){
-  .app{padding:8px}
-  .table{border-width:7px}
-  .tile{width:25px;height:40px;font-size:20px}
-  .discard{width:23px;height:32px;font-size:18px}
-  .center{width:135px}
-  .actions button{padding:6px;font-size:9px}
+  .app{
+    padding:7px;
+  }
+
+  .table{
+    border-width:6px;
+  }
+
+  .tile{
+    width:25px;
+    height:40px;
+    font-size:20px;
+  }
+
+  .discard{
+    width:23px;
+    height:32px;
+    font-size:18px;
+  }
+
+  .center{
+    width:135px;
+    padding:8px;
+  }
+
+  .seat{
+    font-size:11px;
+    min-width:70px;
+  }
+
+  .actions button{
+    padding:7px 9px;
+    font-size:10px;
+  }
 }
 </style>
 </head>
@@ -131,14 +369,20 @@ button{
 
 <!-- ロビー -->
 <div id="lobby" class="app">
+
   <div class="logo">🀄 ONLINE SANMA</div>
   <div class="sub">3 PLAYER ONLINE MAHJONG</div>
 
   <div id="message"></div>
 
   <div class="card">
+
     <label>プレイヤー名</label>
-    <input id="playerName" maxlength="12" placeholder="名前">
+    <input
+      id="playerName"
+      maxlength="12"
+      placeholder="名前を入力"
+    >
 
     <label>BET額</label>
     <select id="betAmount">
@@ -148,86 +392,155 @@ button{
       <option value="5000">5,000 pt</option>
     </select>
 
-    <button class="main-btn" onclick="createRoom()">ルームを作成</button>
+    <button class="main-btn" onclick="createRoom()">
+      ルームを作成
+    </button>
+
   </div>
 
   <div class="card">
+
     <label>ルームID</label>
-    <input id="joinRoomId" inputmode="numeric" maxlength="6"
-           placeholder="6桁のルームID">
-    <button class="dark-btn" onclick="joinRoom()">ルームに参加</button>
+    <input
+      id="joinRoomId"
+      inputmode="numeric"
+      maxlength="6"
+      placeholder="6桁のルームID"
+    >
+
+    <button class="dark-btn" onclick="joinRoom()">
+      ルームに参加
+    </button>
+
   </div>
+
 </div>
+
 
 <!-- 待機室 -->
 <div id="room" class="app hidden">
+
   <div class="logo">🀄 WAITING ROOM</div>
 
   <div class="card">
+
     <div class="status">ROOM ID</div>
-    <div id="roomId" class="room-id">------</div>
-    <button class="dark-btn" onclick="copyRoomId()">ルームIDをコピー</button>
+
+    <div id="roomId" class="room-id">
+      ------
+    </div>
+
+    <button class="dark-btn" onclick="copyRoomId()">
+      ルームIDをコピー
+    </button>
+
   </div>
 
   <div class="card">
-    <div class="status">BET：<span id="betDisplay">0</span> pt</div>
+
+    <div class="status">
+      BET：<span id="betDisplay">0</span> pt
+    </div>
+
     <div id="players"></div>
-    <button id="readyBtn" class="main-btn" onclick="toggleReady()">準備OK</button>
-    <div id="roomStatus" class="status">0/3人参加</div>
+
+    <button
+      id="readyBtn"
+      class="main-btn"
+      onclick="toggleReady()"
+    >
+      準備OK
+    </button>
+
+    <div id="roomStatus" class="status">
+      0/3人参加
+    </div>
+
   </div>
 
-  <button class="dark-btn" onclick="leaveRoom()">退出</button>
+  <button class="dark-btn" onclick="leaveRoom()">
+    退出
+  </button>
+
 </div>
+
 
 <!-- ゲーム -->
 <div id="game" class="app hidden">
+
   <div class="logo">🀄 SANMA</div>
 
   <div class="table">
 
     <div class="seat top">
       <div id="topName" class="seatName">対面</div>
-      <div id="topPoints" class="points">10000 pt</div>
+      <div id="topPoints" class="points">10,000 pt</div>
     </div>
 
     <div class="seat right">
       <div id="rightName" class="seatName">上家</div>
-      <div id="rightPoints" class="points">10000 pt</div>
+      <div id="rightPoints" class="points">10,000 pt</div>
     </div>
 
     <div class="seat bottom">
       <div id="myName" class="seatName">あなた</div>
-      <div id="myPoints" class="points">10000 pt</div>
+      <div id="myPoints" class="points">10,000 pt</div>
     </div>
 
     <div class="center">
       <div id="round">東1局</div>
-      <div id="turnDisplay" class="turn">開始待機中</div>
-      <div id="remaining" class="remaining">山：0枚</div>
+      <div id="turnDisplay" class="turn">
+        開始待機中
+      </div>
+      <div id="remaining" class="remaining">
+        山：0枚
+      </div>
     </div>
 
     <div id="discards" class="discards"></div>
+
     <div id="myHand" class="hand"></div>
 
     <div class="actions">
-      <button id="drawBtn" class="active" onclick="drawTile()">ツモる</button>
-      <button onclick="finishGame()">終了</button>
+      <button
+        id="drawBtn"
+        class="draw"
+        onclick="drawTile()"
+      >
+        ツモる
+      </button>
+
+      <button onclick="finishGame()">
+        終了
+      </button>
     </div>
 
   </div>
 
   <div id="resultBox"></div>
+
 </div>
+
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 import {
-  getDatabase, ref, set, get, update, remove, onValue
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+  getDatabase,
+  ref,
+  set,
+  get,
+  update,
+  remove,
+  onValue,
+  runTransaction
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
 
 const firebaseConfig = {
   apiKey:"AIzaSyAwCitt9BKUnsDP57iNqX7BGlfJo_i2_kI",
@@ -239,451 +552,1096 @@ const firebaseConfig = {
   appId:"1:898248807664:web:f4f0b6c928e889f9ad1e35"
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getDatabase(app);
 
-let myId="";
-let myRoom="";
-let roomUnsubscribe=null;
-let starting=false;
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-const TILES=[
+
+let myId = "";
+let myRoom = "";
+let roomUnsubscribe = null;
+let starting = false;
+let latestRoom = null;
+
+
+/* 三麻牌 */
+const TILES = [
+
   "🀇","🀇","🀇","🀇",
   "🀏","🀏","🀏","🀏",
-  "🀐","🀐","🀐","🀐",
+
   "🀙","🀙","🀙","🀙",
   "🀚","🀚","🀚","🀚",
   "🀛","🀛","🀛","🀛",
   "🀜","🀜","🀜","🀜",
   "🀝","🀝","🀝","🀝",
   "🀞","🀞","🀞","🀞",
+
+  "🀐","🀐","🀐","🀐",
+  "🀑","🀑","🀑","🀑",
+  "🀒","🀒","🀒","🀒",
+  "🀓","🀓","🀓","🀓",
+  "🀔","🀔","🀔","🀔",
+  "🀕","🀕","🀕","🀕",
+  "🀖","🀖","🀖","🀖",
+  "🀗","🀗","🀗","🀗",
+  "🀘","🀘","🀘","🀘",
+
   "🀀","🀀","🀀","🀀",
   "🀁","🀁","🀁","🀁",
   "🀂","🀂","🀂","🀂",
   "🀃","🀃","🀃","🀃",
+
   "🀆","🀆","🀆","🀆",
   "🀅","🀅","🀅","🀅",
-  "🀄","🀄","🀄","🀄",
-  "🀫","🀫","🀫","🀫",
-  "🀢","🀢","🀢","🀢"
+  "🀄","🀄","🀄","🀄"
+
 ];
 
-function shuffle(a){
-  const b=[...a];
-  for(let i=b.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [b[i],b[j]]=[b[j],b[i]];
+
+function shuffle(array){
+
+  const a = [...array];
+
+  for(let i = a.length - 1; i > 0; i--){
+
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [a[i], a[j]] = [a[j], a[i]];
+
   }
-  return b;
+
+  return a;
+
 }
+
 
 function playerId(){
-  return "p_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);
+
+  return "p_" +
+    Date.now() +
+    "_" +
+    Math.random().toString(36).slice(2,8);
+
 }
+
 
 function roomId(){
-  return String(Math.floor(100000+Math.random()*900000));
-}
 
-function showMessage(text){
-  document.getElementById("message").innerHTML=
-    `<div class="error">${text}</div>`;
-}
-
-window.createRoom=async()=>{
-  const name=document.getElementById("playerName").value.trim();
-  const bet=Number(document.getElementById("betAmount").value);
-
-  if(!name)return showMessage("名前を入力してください");
-
-  myId=playerId();
-  myRoom=roomId();
-
-  await set(ref(db,"rooms/"+myRoom),{
-    status:"waiting",
-    host:myId,
-    bet,
-    players:{
-      [myId]:{
-        name,
-        points:10000,
-        ready:false,
-        host:true
-      }
-    }
-  });
-
-  enterRoom();
-};
-
-window.joinRoom=async()=>{
-  const name=document.getElementById("playerName").value.trim();
-  const id=document.getElementById("joinRoomId").value.trim();
-
-  if(!name)return showMessage("名前を入力してください");
-  if(!/^\d{6}$/.test(id))return showMessage("6桁のIDを入力してください");
-
-  const snap=await get(ref(db,"rooms/"+id));
-  if(!snap.exists())return showMessage("ルームがありません");
-
-  const room=snap.val();
-  const players=room.players||{};
-
-  if(room.status!=="waiting")
-    return showMessage("対局はすでに始まっています");
-
-  if(Object.keys(players).length>=3)
-    return showMessage("満員です");
-
-  myId=playerId();
-  myRoom=id;
-
-  await set(ref(db,`rooms/${id}/players/${myId}`),{
-    name,
-    points:10000,
-    ready:false,
-    host:false
-  });
-
-  enterRoom();
-};
-
-function enterRoom(){
-  document.getElementById("lobby").classList.add("hidden");
-  document.getElementById("room").classList.remove("hidden");
-  document.getElementById("roomId").textContent=myRoom;
-
-  roomUnsubscribe=onValue(ref(db,"rooms/"+myRoom),snap=>{
-    if(!snap.exists()){
-      location.reload();
-      return;
-    }
-
-    const room=snap.val();
-
-    if(room.status==="waiting")renderRoom(room);
-    if(room.status==="playing")showGame(room);
-    if(room.status==="finished")showResult(room);
-  });
-}
-
-function renderRoom(room){
-  const players=room.players||{};
-  const ids=Object.keys(players);
-  const box=document.getElementById("players");
-
-  box.innerHTML="";
-  ids.forEach(id=>{
-    const p=players[id];
-    box.innerHTML+=`
-      <div class="player">
-        <div>
-          ${p.name}${p.host?" 👑":""}
-          <div class="points">${Number(p.points).toLocaleString()} pt</div>
-        </div>
-        <div class="${p.ready?"ready":"waiting"}">
-          ${p.ready?"準備OK":"待機中"}
-        </div>
-      </div>`;
-  });
-
-  document.getElementById("betDisplay").textContent=
-    Number(room.bet).toLocaleString();
-
-  const me=players[myId];
-  document.getElementById("readyBtn").textContent=
-    me?.ready?"準備解除":"準備OK";
-
-  const ready=ids.filter(id=>players[id].ready).length;
-
-  document.getElementById("roomStatus").textContent=
-    `${ids.length}/3人参加　｜　準備 ${ready}/${ids.length}`;
-
-  if(
-    ids.length===3 &&
-    ready===3 &&
-    room.host===myId &&
-    !starting
-  ){
-    starting=true;
-    startGame(room,ids);
-  }
-}
-
-window.toggleReady=async()=>{
-  const pRef=ref(db,`rooms/${myRoom}/players/${myId}`);
-  const snap=await get(pRef);
-  if(!snap.exists())return;
-
-  await update(pRef,{
-    ready:!snap.val().ready
-  });
-};
-
-async function startGame(room,ids){
-  const wall=shuffle(TILES);
-
-  const hands={};
-
-  ids.forEach(id=>{
-    hands[id]=wall.splice(0,13);
-  });
-
-  await update(ref(db,"rooms/"+myRoom),{
-    status:"playing",
-    game:{
-      order:ids,
-      currentTurn:ids[0],
-      wall,
-      hands,
-      discards:[],
-      round:"東1局"
-    }
-  });
-}
-
-function showGame(room){
-  document.getElementById("room").classList.add("hidden");
-  document.getElementById("game").classList.remove("hidden");
-
-  const game=room.game;
-  if(!game)return;
-
-  const ids=game.order||[];
-  const players=room.players||{};
-  const me=players[myId];
-
-  document.getElementById("myName").textContent=me?.name||"あなた";
-  document.getElementById("myPoints").textContent=
-    (me?.points||0).toLocaleString()+" pt";
-
-  const others=ids.filter(id=>id!==myId);
-
-  if(others[0]){
-    document.getElementById("topName").textContent=players[others[0]].name;
-    document.getElementById("topPoints").textContent=
-      Number(players[others[0]].points).toLocaleString()+" pt";
-  }
-
-  if(others[1]){
-    document.getElementById("rightName").textContent=players[others[1]].name;
-    document.getElementById("rightPoints").textContent=
-      Number(players[others[1]].points).toLocaleString()+" pt";
-  }
-
-  document.getElementById("round").textContent=game.round||"東1局";
-  document.getElementById("remaining").textContent=
-    "山："+(game.wall?.length||0)+"枚";
-
-  const turnPlayer=players[game.currentTurn];
-  document.getElementById("turnDisplay").textContent=
-    game.currentTurn===myId
-      ? "🟢 あなたの番"
-      : `⏳ ${turnPlayer?.name||"相手"}の番`;
-
-  const drawBtn=document.getElementById("drawBtn");
-  const hand=game.hands?.[myId]||[];
-
-  drawBtn.disabled=!(
-    game.currentTurn===myId &&
-    hand.length===13 &&
-    game.wall?.length>0
+  return String(
+    Math.floor(100000 + Math.random() * 900000)
   );
 
-  drawBtn.style.opacity=drawBtn.disabled?".35":"1";
-
-  renderHand(game);
-  renderDiscards(game);
 }
 
-function renderHand(game){
-  const box=document.getElementById("myHand");
-  const hand=game.hands?.[myId]||[];
 
-  box.innerHTML="";
+function showMessage(text){
 
-  hand.forEach((tile,index)=>{
-    const el=document.createElement("div");
-    el.className="tile";
+  document.getElementById("message").innerHTML =
+    `<div class="error">${text}</div>`;
 
-    if(
-      game.currentTurn===myId &&
-      hand.length===14
-    ){
-      el.classList.add("playable");
-      el.onclick=()=>discardTile(index);
+}
+
+
+window.createRoom = async function(){
+
+  const name =
+    document.getElementById("playerName").value.trim();
+
+  const bet =
+    Number(document.getElementById("betAmount").value);
+
+  if(!name){
+
+    showMessage("名前を入力してください");
+
+    return;
+
+  }
+
+  myId = playerId();
+  myRoom = roomId();
+
+
+  await set(ref(db,"rooms/" + myRoom),{
+
+    status:"waiting",
+
+    host:myId,
+
+    bet:bet,
+
+    players:{
+
+      [myId]:{
+
+        name:name,
+
+        points:10000,
+
+        ready:false,
+
+        host:true
+
+      }
+
     }
 
-    el.textContent=tile;
-    box.appendChild(el);
   });
+
+
+  enterRoom();
+
+};
+
+
+window.joinRoom = async function(){
+
+  const name =
+    document.getElementById("playerName").value.trim();
+
+  const id =
+    document.getElementById("joinRoomId").value.trim();
+
+
+  if(!name){
+
+    showMessage("名前を入力してください");
+
+    return;
+
+  }
+
+
+  if(!/^\d{6}$/.test(id)){
+
+    showMessage("6桁のルームIDを入力してください");
+
+    return;
+
+  }
+
+
+  const snap =
+    await get(ref(db,"rooms/" + id));
+
+
+  if(!snap.exists()){
+
+    showMessage("ルームがありません");
+
+    return;
+
+  }
+
+
+  const room = snap.val();
+
+  const players = room.players || {};
+
+
+  if(room.status !== "waiting"){
+
+    showMessage("この対局はすでに始まっています");
+
+    return;
+
+  }
+
+
+  if(Object.keys(players).length >= 3){
+
+    showMessage("このルームは満員です");
+
+    return;
+
+  }
+
+
+  myId = playerId();
+
+  myRoom = id;
+
+
+  await set(
+    ref(db,`rooms/${myRoom}/players/${myId}`),
+    {
+
+      name:name,
+
+      points:10000,
+
+      ready:false,
+
+      host:false
+
+    }
+  );
+
+
+  enterRoom();
+
+};
+
+
+function enterRoom(){
+
+  document
+    .getElementById("lobby")
+    .classList.add("hidden");
+
+  document
+    .getElementById("room")
+    .classList.remove("hidden");
+
+
+  document
+    .getElementById("roomId")
+    .textContent = myRoom;
+
+
+  roomUnsubscribe =
+    onValue(
+      ref(db,"rooms/" + myRoom),
+
+      snap => {
+
+        if(!snap.exists()){
+
+          location.reload();
+
+          return;
+
+        }
+
+
+        latestRoom = snap.val();
+
+
+        if(latestRoom.status === "waiting"){
+
+          renderRoom(latestRoom);
+
+        }
+
+
+        if(latestRoom.status === "playing"){
+
+          showGame(latestRoom);
+
+        }
+
+
+        if(latestRoom.status === "finished"){
+
+          showGame(latestRoom);
+
+          showResult(latestRoom);
+
+        }
+
+      }
+
+    );
+
 }
+
+
+function renderRoom(room){
+
+  const players = room.players || {};
+
+  const ids = Object.keys(players);
+
+  const box =
+    document.getElementById("players");
+
+
+  box.innerHTML = "";
+
+
+  ids.forEach(id => {
+
+    const p = players[id];
+
+    box.innerHTML += `
+
+      <div class="player">
+
+        <div>
+
+          ${p.name}${p.host ? " 👑" : ""}
+
+          <div class="points">
+            ${Number(p.points || 0).toLocaleString()} pt
+          </div>
+
+        </div>
+
+        <div class="${p.ready ? "ready" : "waiting"}">
+
+          ${p.ready ? "準備OK" : "待機中"}
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  document
+    .getElementById("betDisplay")
+    .textContent =
+    Number(room.bet || 0).toLocaleString();
+
+
+  const me = players[myId];
+
+
+  document
+    .getElementById("readyBtn")
+    .textContent =
+    me?.ready ? "準備解除" : "準備OK";
+
+
+  const readyCount =
+    ids.filter(id => players[id].ready).length;
+
+
+  document
+    .getElementById("roomStatus")
+    .textContent =
+    `${ids.length}/3人参加 ｜ 準備 ${readyCount}/${ids.length}`;
+
+
+  if(
+
+    ids.length === 3 &&
+
+    readyCount === 3 &&
+
+    room.host === myId &&
+
+    !starting
+
+  ){
+
+    starting = true;
+
+    startGame(ids);
+
+  }
+
+}
+
+
+window.toggleReady = async function(){
+
+  if(!myRoom || !myId) return;
+
+
+  const pRef =
+    ref(
+      db,
+      `rooms/${myRoom}/players/${myId}`
+    );
+
+
+  const snap =
+    await get(pRef);
+
+
+  if(!snap.exists()) return;
+
+
+  await update(
+    pRef,
+    {
+      ready:!snap.val().ready
+    }
+  );
+
+};
+
+
+async function startGame(ids){
+
+  const wall = shuffle(TILES);
+
+  const hands = {};
+
+
+  ids.forEach(id => {
+
+    hands[id] =
+      wall.splice(0,13);
+
+  });
+
+
+  await update(
+    ref(db,"rooms/" + myRoom),
+    {
+
+      status:"playing",
+
+      game:{
+
+        order:ids,
+
+        currentTurn:ids[0],
+
+        wall:wall,
+
+        hands:hands,
+
+        discards:[],
+
+        round:"東1局"
+
+      }
+
+    }
+  );
+
+}
+
+
+function showGame(room){
+
+  document
+    .getElementById("room")
+    .classList.add("hidden");
+
+  document
+    .getElementById("game")
+    .classList.remove("hidden");
+
+
+  const game = room.game;
+
+  if(!game) return;
+
+
+  const players = room.players || {};
+
+  const ids = game.order || [];
+
+
+  const me = players[myId] || {};
+
+
+  document
+    .getElementById("myName")
+    .textContent =
+    me.name || "あなた";
+
+
+  document
+    .getElementById("myPoints")
+    .textContent =
+    Number(me.points || 0).toLocaleString() + " pt";
+
+
+  const others =
+    ids.filter(id => id !== myId);
+
+
+  if(others[0] && players[others[0]]){
+
+    document
+      .getElementById("topName")
+      .textContent =
+      players[others[0]].name;
+
+
+    document
+      .getElementById("topPoints")
+      .textContent =
+      Number(
+        players[others[0]].points || 0
+      ).toLocaleString() + " pt";
+
+  }
+
+
+  if(others[1] && players[others[1]]){
+
+    document
+      .getElementById("rightName")
+      .textContent =
+      players[others[1]].name;
+
+
+    document
+      .getElementById("rightPoints")
+      .textContent =
+      Number(
+        players[others[1]].points || 0
+      ).toLocaleString() + " pt";
+
+  }
+
+
+  document
+    .getElementById("round")
+    .textContent =
+    game.round || "東1局";
+
+
+  document
+    .getElementById("remaining")
+    .textContent =
+    "山：" +
+    (game.wall?.length || 0) +
+    "枚";
+
+
+  const turnPlayer =
+    players[game.currentTurn];
+
+
+  document
+    .getElementById("turnDisplay")
+    .textContent =
+
+    game.currentTurn === myId
+
+      ? "🟢 あなたの番"
+
+      : "⏳ " +
+        (turnPlayer?.name || "相手") +
+        "の番";
+
+
+  const hand =
+    game.hands?.[myId] || [];
+
+
+  const canDraw =
+
+    game.currentTurn === myId &&
+
+    hand.length === 13 &&
+
+    (game.wall?.length || 0) > 0;
+
+
+  const drawBtn =
+    document.getElementById("drawBtn");
+
+
+  drawBtn.disabled = !canDraw;
+
+
+  renderHand(game);
+
+  renderDiscards(game);
+
+}
+
+
+function renderHand(game){
+
+  const box =
+    document.getElementById("myHand");
+
+
+  const hand =
+    game.hands?.[myId] || [];
+
+
+  box.innerHTML = "";
+
+
+  hand.forEach((tile,index) => {
+
+    const el =
+      document.createElement("div");
+
+
+    el.className = "tile";
+
+
+    /*
+      自分の番で14枚なら
+      必ずタップ可能
+    */
+
+    const canDiscard =
+
+      game.currentTurn === myId &&
+
+      hand.length === 14;
+
+
+    if(canDiscard){
+
+      el.classList.add("playable");
+
+      el.onclick = function(){
+
+        discardTile(index);
+
+      };
+
+    }
+
+
+    el.textContent = tile;
+
+
+    box.appendChild(el);
+
+  });
+
+}
+
 
 function renderDiscards(game){
-  const box=document.getElementById("discards");
-  box.innerHTML="";
 
-  (game.discards||[]).forEach(d=>{
-    const el=document.createElement("div");
-    el.className="discard";
-    el.textContent=d.tile;
+  const box =
+    document.getElementById("discards");
+
+
+  box.innerHTML = "";
+
+
+  (game.discards || []).forEach(d => {
+
+    const el =
+      document.createElement("div");
+
+
+    el.className = "discard";
+
+    el.textContent = d.tile;
+
     box.appendChild(el);
+
   });
+
 }
 
-window.drawTile=async()=>{
-  const gameRef=ref(db,`rooms/${myRoom}/game`);
-  const snap=await get(gameRef);
 
-  if(!snap.exists())return;
+/*
+  ツモ
+  transactionを使って
+  同時更新でも壊れにくくする
+*/
 
-  const game=snap.val();
+window.drawTile = async function(){
 
-  if(game.currentTurn!==myId)return;
-  if((game.hands[myId]||[]).length!==13)return;
-  if(!game.wall?.length)return finishGame();
+  if(!myRoom || !myId) return;
 
-  const tile=game.wall.pop();
 
-  game.hands[myId].push(tile);
+  const gameRef =
+    ref(db,`rooms/${myRoom}/game`);
 
-  await update(gameRef,{
-    wall:game.wall,
-    [`hands/${myId}`]:game.hands[myId]
-  });
+
+  await runTransaction(
+    gameRef,
+
+    game => {
+
+      if(!game) return game;
+
+
+      if(game.currentTurn !== myId){
+
+        return;
+
+      }
+
+
+      const hand =
+        game.hands?.[myId] || [];
+
+
+      if(hand.length !== 13){
+
+        return;
+
+      }
+
+
+      if(!game.wall || game.wall.length === 0){
+
+        return;
+
+      }
+
+
+      const tile =
+        game.wall.pop();
+
+
+      game.hands[myId].push(tile);
+
+
+      return game;
+
+    }
+
+  );
+
 };
+
+
+/*
+  打牌
+*/
 
 async function discardTile(index){
-  const gameRef=ref(db,`rooms/${myRoom}/game`);
-  const snap=await get(gameRef);
 
-  if(!snap.exists())return;
+  if(!myRoom || !myId) return;
 
-  const game=snap.val();
 
-  if(game.currentTurn!==myId)return;
-  if(game.hands[myId].length!==14)return;
+  const gameRef =
+    ref(db,`rooms/${myRoom}/game`);
 
-  const tile=game.hands[myId].splice(index,1)[0];
 
-  const order=game.order;
-  const currentIndex=order.indexOf(myId);
-  const next=order[(currentIndex+1)%order.length];
+  await runTransaction(
+    gameRef,
 
-  game.discards.push({
-    player:myId,
-    tile
-  });
+    game => {
 
-  if(!game.wall.length){
-    await update(ref(db,"rooms/"+myRoom),{
-      status:"finished",
-      game
-    });
-    return;
-  }
+      if(!game) return game;
 
-  await update(gameRef,{
-    [`hands/${myId}`]:game.hands[myId],
-    discards:game.discards,
-    currentTurn:next
-  });
+
+      if(game.currentTurn !== myId){
+
+        return;
+
+      }
+
+
+      const hand =
+        game.hands?.[myId] || [];
+
+
+      if(hand.length !== 14){
+
+        return;
+
+      }
+
+
+      if(
+        index < 0 ||
+        index >= hand.length
+      ){
+
+        return;
+
+      }
+
+
+      const tile =
+        hand.splice(index,1)[0];
+
+
+      if(!game.discards){
+
+        game.discards = [];
+
+      }
+
+
+      game.discards.push({
+
+        player:myId,
+
+        tile:tile
+
+      });
+
+
+      const order =
+        game.order || [];
+
+
+      const currentIndex =
+        order.indexOf(myId);
+
+
+      const nextIndex =
+        (currentIndex + 1) %
+        order.length;
+
+
+      game.currentTurn =
+        order[nextIndex];
+
+
+      return game;
+
+    }
+
+  );
+
 }
 
-window.finishGame=async()=>{
-  const roomSnap=await get(ref(db,"rooms/"+myRoom));
-  if(!roomSnap.exists())return;
 
-  const room=roomSnap.val();
+/*
+  終了
+*/
 
-  if(room.status!=="playing")return;
+window.finishGame = async function(){
 
-  const players=room.players||{};
-  const ids=Object.keys(players);
+  if(!myRoom) return;
+
+
+  const roomSnap =
+    await get(
+      ref(db,"rooms/" + myRoom)
+    );
+
+
+  if(!roomSnap.exists()) return;
+
+
+  const room =
+    roomSnap.val();
+
+
+  if(room.status !== "playing") return;
+
+
+  const players =
+    room.players || {};
+
+
+  const ids =
+    Object.keys(players);
+
+
+  if(ids.length !== 3) return;
+
 
   /*
-    現段階では実際の役・点数計算は未実装。
-    そのため終了時の順位は現在ポイント順。
-    同点の場合はランダム順。
+    現時点では役判定未実装なので
+    仮順位をランダムに決定
+
+    後でロン・ツモ・役判定を
+    入れれば本当の順位に変更可能
   */
-  const ranking=[...ids].sort((a,b)=>{
-    const diff=players[b].points-players[a].points;
-    return diff!==0?diff:Math.random()-.5;
-  });
 
-  const bet=Number(room.bet)||0;
-  const changes={
-    [ranking[0]]:bet*2,
-    [ranking[1]]:0,
-    [ranking[2]]:-bet*2
+  const ranking =
+    [...ids].sort(
+      () => Math.random() - 0.5
+    );
+
+
+  const bet =
+    Number(room.bet || 0);
+
+
+  const changes = {
+
+    [ranking[0]]: bet * 2,
+
+    [ranking[1]]: 0,
+
+    [ranking[2]]: -(bet * 2)
+
   };
 
-  const updates={status:"finished"};
 
-  ranking.forEach(id=>{
-    updates[`players/${id}/points`]=
-      Math.max(0,Number(players[id].points)+changes[id]);
-  });
+  const updates = {
 
-  updates["result"]={
-    ranking,
-    changes
+    status:"finished",
+
+    result:{
+
+      ranking:ranking,
+
+      changes:changes
+
+    }
+
   };
 
-  await update(ref(db,"rooms/"+myRoom),updates);
-};
 
-function showResult(room){
-  document.getElementById("game").classList.remove("hidden");
+  ranking.forEach(id => {
 
-  const result=room.result;
-  if(!result)return;
+    updates[
+      `players/${id}/points`
+    ] = Math.max(
 
-  const players=room.players;
-  const box=document.getElementById("resultBox");
+      0,
 
-  const medals=["🥇","🥈","🥉"];
+      Number(players[id].points || 0) +
+      Number(changes[id])
 
-  box.innerHTML=`
-    <div class="result">
-      <h2>対局終了 🀄</h2>
-      ${result.ranking.map((id,index)=>{
-        const change=result.changes[id];
-        const cls=change>0?"positive":change<0?"negative":"";
-        const sign=change>0?"+":"";
-        return `
-          <div class="rank">
-            ${medals[index]} ${players[id].name}
-            <br>
-            <span class="${cls}">
-              ${sign}${Number(change).toLocaleString()} pt
-            </span>
-            <br>
-            <small>
-              所持金：
-              ${Number(players[id].points).toLocaleString()} pt
-            </small>
-          </div>`;
-      }).join("")}
-      <button class="main-btn" onclick="location.reload()">
-        ロビーに戻る
-      </button>
-    </div>`;
+    );
+
+  });
+
+
+  await update(
+    ref(db,"rooms/" + myRoom),
+    updates
+  );
+
 }
 
-window.copyRoomId=()=>{
-  navigator.clipboard?.writeText(myRoom)
-    .then(()=>alert("ルームIDをコピーしました"))
-    .catch(()=>alert("ルームID："+myRoom));
+
+function showResult(room){
+
+  const result =
+    room.result;
+
+
+  if(!result) return;
+
+
+  const players =
+    room.players || {};
+
+
+  const medals =
+    ["🥇","🥈","🥉"];
+
+
+  const box =
+    document.getElementById("resultBox");
+
+
+  box.innerHTML = `
+
+    <div class="result">
+
+      <h2>対局終了 🀄</h2>
+
+      ${result.ranking.map((id,index) => {
+
+        const change =
+          Number(result.changes[id] || 0);
+
+
+        const cls =
+
+          change > 0
+
+            ? "positive"
+
+            : change < 0
+
+              ? "negative"
+
+              : "";
+
+
+        const sign =
+          change > 0 ? "+" : "";
+
+
+        return `
+
+          <div class="rank">
+
+            ${medals[index]}
+            ${players[id]?.name || "PLAYER"}
+
+            <br>
+
+            <span class="${cls}">
+
+              ${sign}
+              ${change.toLocaleString()} pt
+
+            </span>
+
+            <br>
+
+            <small>
+
+              所持金：
+
+              ${Number(
+                players[id]?.points || 0
+              ).toLocaleString()} pt
+
+            </small>
+
+          </div>
+
+        `;
+
+      }).join("")}
+
+      <button
+        class="main-btn"
+        onclick="location.reload()"
+      >
+        ロビーに戻る
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+window.copyRoomId = function(){
+
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
+
+    navigator.clipboard
+      .writeText(myRoom)
+      .then(() => {
+
+        alert("ルームIDをコピーしました");
+
+      })
+      .catch(() => {
+
+        alert("ルームID：" + myRoom);
+
+      });
+
+  }else{
+
+    alert("ルームID：" + myRoom);
+
+  }
+
 };
 
-window.leaveRoom=async()=>{
-  if(myRoom&&myId){
-    await remove(ref(db,`rooms/${myRoom}/players/${myId}`));
+
+window.leaveRoom = async function(){
+
+  if(myRoom && myId){
+
+    await remove(
+      ref(
+        db,
+        `rooms/${myRoom}/players/${myId}`
+      )
+    );
+
   }
+
+
+  if(roomUnsubscribe){
+
+    roomUnsubscribe();
+
+  }
+
+
   location.reload();
+
 };
 
 </script>
+
 </body>
 </html>
